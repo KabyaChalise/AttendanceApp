@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { createEmployeeViewModel } from "../../viewmodel/employee/EmployeeViewModel";
 import { container } from "../../../core/di/Container";
-import { UpdateEmployeeUseCase } from "../../../domain/usecase/employee/UpdateEmployeeUseCase";
 
 export default function EmployeeFormScreen({ navigation, route }: any) {
   const employeeViewModel = createEmployeeViewModel(
@@ -21,7 +20,7 @@ export default function EmployeeFormScreen({ navigation, route }: any) {
     container.getWorkedHoursUseCase(),
     container.getUpdateEmployeeUseCase()
   );
-  const { employee } = route.params;
+  const employee = route?.params?.employee;
 
   const useEmployeeViewModel = employeeViewModel.createHook();
 
@@ -29,10 +28,10 @@ export default function EmployeeFormScreen({ navigation, route }: any) {
     useEmployeeViewModel();
 
   const [formData, setFormData] = useState({
-    name: employee.name || "",
-    position: employee.position || "",
-    email: employee.email || "",
-    password: employee.password || "",
+    name: employee?.name || "",
+    position: employee?.position || "",
+    email: employee?.email || "",
+    password: employee?.password || "",
   });
 
   // Handle errors
@@ -67,7 +66,6 @@ export default function EmployeeFormScreen({ navigation, route }: any) {
     }
   };
 
-
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>
@@ -77,18 +75,21 @@ export default function EmployeeFormScreen({ navigation, route }: any) {
       <TextInput
         style={styles.input}
         placeholder="Full Name *"
+        placeholderTextColor="#888"
         value={formData.name}
         onChangeText={(val) => handleInputChange("name", val)}
       />
       <TextInput
         style={styles.input}
         placeholder="Position *"
+        placeholderTextColor="#888"
         value={formData.position}
         onChangeText={(val) => handleInputChange("position", val)}
       />
       <TextInput
         style={styles.input}
         placeholder="Email *"
+        placeholderTextColor="#888"
         value={formData.email}
         onChangeText={(val) => handleInputChange("email", val)}
         autoCapitalize="none"
@@ -97,6 +98,7 @@ export default function EmployeeFormScreen({ navigation, route }: any) {
       <TextInput
         style={styles.input}
         placeholder="Password *"
+        placeholderTextColor="#888"
         value={formData.password}
         onChangeText={(val) => handleInputChange("password", val)}
         secureTextEntry
